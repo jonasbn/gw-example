@@ -38,7 +38,7 @@ func main() {
 	}
 
 	stdin := bufio.NewReader(os.Stdin)
-	fmt.Println("Commands: !echo, !reverse, !quit")
+	fmt.Println(cmds())
 	for cmd := readString(*stdin, "cmd> "); !strings.EqualFold(cmd, QUITCMD); cmd = readString(*stdin, "cmd> ") {
 		f, ok := funcs[cmd]
 		if !ok {
@@ -72,4 +72,15 @@ func readString(br bufio.Reader, message string) string {
 	fmt.Print(message)
 	msg, _ := br.ReadString('\n')
 	return strings.Trim(msg, "\n")
+}
+
+func cmds() string {
+	sb := strings.Builder{}
+	sb.WriteString("Commands list: ")
+	sb.WriteString(ECHOCMD)
+	sb.WriteString(", ")
+	sb.WriteString(REVERSECMD)
+	sb.WriteString(", ")
+	sb.WriteString(QUITCMD)
+	return sb.String()
 }
