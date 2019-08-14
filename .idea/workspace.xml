@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1a967571-d837-49c8-b4d6-5c87fcb4d814" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.12.8/libexec" />
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1PMxn3dn6nxFR7jkHnuPl0Fki2D" />
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="NewWatcherDialog.advanced.open" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/rpc" />
+      <recent name="$PROJECT_DIR$/proto" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Makefile.build-client (1)">
+    <configuration name="build-client (1)" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="build-client" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="build-client" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="build-client" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="proto (2)" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="proto" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="proto (3)" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="proto" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <configuration name="proto (4)" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="proto" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile.build-client (1)" />
+        <item itemvalue="Makefile.build-client" />
+        <item itemvalue="Makefile.proto (4)" />
+        <item itemvalue="Makefile.proto (3)" />
+        <item itemvalue="Makefile.proto (2)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+</project>
