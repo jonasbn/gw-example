@@ -10,11 +10,11 @@ endif
 
 .PHONY: build
 build:
-	GO111MODULE=on CGO_ENABLED=0 go build $(LD_FLAGS) -o bin/service
+	CGO_ENABLED=0 go build $(LD_FLAGS) -o bin/service
 
 .PHONY: build-client
 build-client:
-	GO111MODULE=on CGO_ENABLED=0 go build $(LD_FLAGS) -o ./bin/client ./client/
+	CGO_ENABLED=0 go build $(LD_FLAGS) -o ./bin/client ./client/
 
 .PHONY: docker
 docker:
@@ -32,21 +32,24 @@ docker_clean:
 .PHONY: deps-init
 deps-init:
 	rm -f go.mod go.sum
-	@GO111MODULE=on go mod init
-	@GO111MODULE=on go mod tidy
+	@go mod init
+	@go mod tidy
 
 .PHONY: update-deps
 update-deps:
-	@GO111MODULE=on go mod tidy
+	@go mod tidy
 
 .PHONY: deps
 deps:
-	@GO111MODULE=on go mod download
+	@go mod download
 
 .PHONY: lint
-lint:
+lint: golint buflint
+
+.PHONY: golint
+golint:
 	command -v golangci-lint || (cd /usr/local ; wget -O - -q https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s latest)
-	GO111MODULE=on golangci-lint run --disable-all \
+	golangci-lint run --disable-all \
 	--deadline=10m \
 	--skip-files \.*_mock\.*\.go \
 	-E errcheck \
@@ -65,31 +68,14 @@ lint:
 	-E staticcheck \
 	-E gosec
 
-.PHONY: proto
-proto:
-	@protoc -I/usr/local/include -I. \
-  -I$$GOPATH/src \
-  -I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-  --go_out=plugins=grpc:./rpc/ proto/service.proto
-
-	@protoc -I/usr/local/include -I. \
-  -I$$GOPATH/src \
-  -I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-  --grpc-gateway_out=logtostderr=true:./rpc proto/service.proto
-
-	@protoc -I/usr/local/include -I. \
-  -I$$GOPATH/src \
-  -I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-  --swagger_out=logtostderr=true:./swagger \
-  proto/service.proto
-	@mv rpc/proto/*.go rpc/
-	@rm -rf rpc/proto
-	@mv swagger/proto/service.swagger.json swagger/service.swagger.json
-	@rm -rf swagger/proto
+.PHONY: buflint
+buflint:
+	command -v buf || go install github.com/bufbuild/buf/cmd/buf@latest
+	buf lint
 
 .PHONY: test
 test:
-	GO111MODULE=on go test -v -cover -race -tags=unit ./...
+	go test -v -cover -race -tags=unit ./...
 
 .PHONY: check_go_fmt
 check_go_fmt:
@@ -97,3 +83,8 @@ check_go_fmt:
 		>&2 echo "The .go sources aren't formatted. Please format them with 'go fmt'."; \
 		exit 1; \
 	fi
+
+generate: generate/proto
+generate/proto:
+	command -v buf || go install github.com/bufbuild/buf/cmd/buf@latest
+	buf generate

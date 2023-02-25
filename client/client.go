@@ -8,8 +8,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/indiependente/gw-example/rpc"
+	service "github.com/indiependente/gw-example/rpc/service/v1"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 const (
@@ -20,7 +21,7 @@ const (
 
 func main() {
 
-	opts := grpc.WithInsecure()
+	opts := grpc.WithTransportCredentials(insecure.NewCredentials())
 	address := getDefault("SERVER_ADDR", "0.0.0.0")
 	port := getDefault("PORT", "9090")
 
@@ -31,30 +32,41 @@ func main() {
 	}
 
 	ctx := context.Background()
-	cl := rpc.NewMessageAPIClient(conn)
-	funcs := map[string]func(context.Context, *rpc.StringMessage, ...grpc.CallOption) (*rpc.StringMessage, error){
-		"!echo":    cl.Echo,
-		"!reverse": cl.Reverse,
+	cl := service.NewMessageAPIServiceClient(conn)
+	supportedCmds := map[string]struct{}{
+		"!echo":    {},
+		"!reverse": {},
 	}
 
 	stdin := bufio.NewReader(os.Stdin)
 	fmt.Println(cmds())
 	for cmd := readString(*stdin, "cmd> "); !strings.EqualFold(cmd, QUITCMD); cmd = readString(*stdin, "cmd> ") {
-		f, ok := funcs[cmd]
-		if !ok {
-			log.Fatal("Unknown command")
+		if _, ok := supportedCmds[cmd]; !ok {
+			log.Println("unsupported command")
+
+			continue
 		}
+
 		msgstring := readString(*stdin, "Type a message > ")
 		log.Println("client >>> " + msgstring)
 
-		msg, err := f(ctx, &rpc.StringMessage{
-			Value: msgstring,
-		})
-		if err != nil {
-			log.Fatal(err)
-		}
+		var msgResponse string
+		switch cmd {
+		case ECHOCMD:
+			msg, err := cl.Echo(ctx, &service.EchoRequest{Value: msgstring})
+			if err != nil {
+				log.Println(err)
+			}
+			msgResponse = msg.Value
 
-		log.Println("server >>> " + msg.Value)
+		case REVERSECMD:
+			msg, err := cl.Reverse(ctx, &service.ReverseRequest{Value: msgstring})
+			if err != nil {
+				log.Println(err)
+			}
+			msgResponse = msg.Value
+		}
+		log.Println("server >>> " + msgResponse)
 	}
 
 	log.Println("Client shutting down...")

@@ -3,8 +3,8 @@ module github.com/indiependente/gw-example
 go 1.12
 
 require (
-	github.com/golang/protobuf v1.3.2
-	github.com/grpc-ecosystem/grpc-gateway v1.9.5
-	google.golang.org/genproto v0.0.0-20190801165951-fa694d86fc64
-	google.golang.org/grpc v1.22.1
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.1
+	google.golang.org/genproto v0.0.0-20230223222841-637eb2293923
+	google.golang.org/grpc v1.53.0
+	google.golang.org/protobuf v1.28.1
 )

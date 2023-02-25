@@ -1,0 +1,16 @@
+{
+    "name": "Go Protobuf",
+    "image":"mcr.microsoft.com/devcontainers/go",
+	"postCreateCommand": "go install github.com/bufbuild/buf/cmd/buf@latest",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"DavidAnson.vscode-markdownlint",
+				"golang.go",
+				"ms-vscode.makefile-tools",
+				"zxh404.vscode-proto3",
+				"ms-azuretools.vscode-docker"
+			]
+		}
+	}
+}

@@ -1,7 +1,6 @@
 # Builder image
-FROM golang:1.12-alpine AS builder
+FROM golang:alpine AS builder
 RUN apk --no-cache --virtual .build-dependencies add git curl openssh
-ENV GO111MODULE=on
 WORKDIR $GOPATH/src/github.com/indiependente/gw-example/
 ADD . .
 RUN go mod download

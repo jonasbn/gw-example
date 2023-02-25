@@ -1,0 +1,20 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/indiependente/gw-example/rpc
+    except:
+      - buf.build/googleapis/googleapis
+      - buf.build/grpc-ecosystem/grpc-gateway
+plugins:
+  - remote: buf.build/protocolbuffers/plugins/go
+    out: rpc
+    opt: paths=source_relative
+  - remote: buf.build/grpc/plugins/go
+    out: rpc
+    opt: paths=source_relative,require_unimplemented_servers=false
+  - remote: buf.build/grpc-ecosystem/plugins/grpc-gateway
+    out: rpc
+    opt: paths=source_relative
+  - remote: buf.build/grpc-ecosystem/plugins/openapiv2
+    out: third_party/OpenAPI

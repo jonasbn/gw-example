@@ -7,11 +7,14 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"time"
 
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/indiependente/gw-example/rpc"
+	gw "github.com/indiependente/gw-example/rpc/service/v1"
 	"google.golang.org/grpc"
-
-	gw "github.com/indiependente/gw-example/rpc"
+	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/reflection"
 )
 
 var (
@@ -28,12 +31,13 @@ func startGRPC() error {
 	}
 
 	grpcServer := grpc.NewServer()
+	reflection.Register(grpcServer)
 
-	srv := &gw.MsgAPISrv{
+	srv := &rpc.MsgAPISrv{
 		Log: log.New(os.Stdout, ">>> ", 0),
 	}
 
-	gw.RegisterMessageAPIServer(grpcServer, srv)
+	gw.RegisterMessageAPIServiceServer(grpcServer, srv)
 
 	return grpcServer.Serve(lis)
 }
@@ -46,14 +50,20 @@ func startGW() error {
 	// Register gRPC server endpoint
 	// Note: Make sure the gRPC server is running properly and accessible
 	mux := runtime.NewServeMux()
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := gw.RegisterMessageAPIHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
+	err := gw.RegisterMessageAPIServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
 	if err != nil {
 		return err
 	}
 
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
-	return http.ListenAndServe(":8080", mux)
+	srv := http.Server{
+		Addr:        ":8080",
+		ReadTimeout: 10 * time.Second,
+		Handler:     mux,
+	}
+
+	return srv.ListenAndServe()
 }
 
 func main() {

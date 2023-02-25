@@ -2,12 +2,16 @@ version: '3.3'
 
 services:
   gRPC-server:
-    image: indiependente/gw-example-server
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
     ports:
      - 8080:8080
      - 9090:9090
   gRPC-client:
-    image: indiependente/gw-example-client
+    build: 
+      context: .
+      dockerfile: ./client/Dockerfile
     environment:
       SERVER_ADDR: gRPC-server
       PORT: 9090

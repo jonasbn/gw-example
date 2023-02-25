@@ -1,0 +1,37 @@
+syntax = "proto3";
+package service.v1;
+
+import "google/api/annotations.proto";
+
+message EchoRequest {
+    string value = 1;
+}
+
+message EchoResponse {
+    string value = 1;
+}
+
+message ReverseRequest {
+    string value = 1;
+}
+
+message ReverseResponse {
+    string value = 1;
+}
+
+service MessageAPIService {
+    rpc Echo(EchoRequest) returns (EchoResponse) {
+         option (google.api.http) = {
+            post: "/v1/example/echo"
+            body: "*"
+            response_body: "*"
+        };
+    }
+    rpc Reverse(ReverseRequest) returns (ReverseResponse) {
+        option (google.api.http) = {
+            post: "/v1/example/reverse"
+            body: "*"
+            response_body: "*"
+        };
+    }
+}
